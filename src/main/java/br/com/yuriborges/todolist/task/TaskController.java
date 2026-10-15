@@ -54,7 +54,6 @@ public class TaskController {
     return tasks;
   }
 
-  // http://localhost:8080/tasks/7849309484edslrbhvfsdkjl9384493
   @PutMapping ("/{id}")
   public ResponseEntity update(@RequestBody TaskModel taskModel, HttpServletRequest request, @PathVariable UUID id){
     var task = this.taskRepository.findById(id).orElse(null);
