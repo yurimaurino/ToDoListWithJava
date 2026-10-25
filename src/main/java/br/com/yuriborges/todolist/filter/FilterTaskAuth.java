@@ -23,14 +23,23 @@ public class FilterTaskAuth extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
+        
+    if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+        filterChain.doFilter(request, response);
+        return; // Interrompe o filtro aqui para não tentar ler a senha que não existe no OPTIONS
+    }
 
     var servletPath = request.getServletPath();
 
     if (servletPath.startsWith("/tasks/")) {
 
       // pegar a autenticação (usuario e senha)
-
       var authorization = request.getHeader("Authorization");
+
+      if (authorization == null) {
+          response.sendError(401, "Faltando cabecalho de autenticacao");
+          return;
+      }
 
       var authEncoded = authorization.substring("Basic".length()).trim();
 
