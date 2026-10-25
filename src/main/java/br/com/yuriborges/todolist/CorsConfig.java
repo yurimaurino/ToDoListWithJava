@@ -16,13 +16,11 @@ public class CorsConfig {
                 registry.addMapping("/**")
                         .allowedOrigins(
                                 "http://localhost:5173",
-                                "https://todolistwithreact-eight.vercel.app/"
+                                "https://todolistwithreact-eight.vercel.app"
                         )
-                        .allowedMethods(
-                                "GET", "POST", "PUT",
-                                "PATCH", "DELETE", "OPTIONS"
-                        )
-                        .allowedHeaders("*");
+                        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+                        .allowedHeaders("Authorization", "Content-Type", "Accept", "X-Requested-With")
+                        .allowCredentials(true); 
             }
         };
     }
